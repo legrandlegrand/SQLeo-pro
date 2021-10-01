@@ -7,11 +7,11 @@
 	<classpathentry kind="lib" path="lib/jaxb-api-2.3.0.jar"/>
 	<classpathentry kind="lib" path="lib/jaxb-core-2.3.0.jar"/>
 	<classpathentry kind="lib" path="lib/jaxb-impl-2.3.0.jar"/>
-	<classpathentry kind="lib" path="/home/ody/d/git/sqleo-code-r646-trunk/lib/mariadb-java-client-2.7.3.jar" sourcepath="lib/mariadb-java-client-2.7.3-sources.jar">
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="lib/mariadb-java-client-2.7.3.jar" sourcepath="lib/mariadb-java-client-2.7.3-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/sqleo-pro/lib/mariadb-java-client-2.7.3-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
