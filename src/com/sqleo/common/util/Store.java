@@ -51,7 +51,7 @@ public class Store
 	protected static final int INDEX_JUMP = 2;
 	
 	/* mount-points */
-	private Hashtable mountpoints;
+	private Hashtable<String, Object[]> mountpoints;
 	
 	/* Current mount-point */
 	private Object[] cmp;

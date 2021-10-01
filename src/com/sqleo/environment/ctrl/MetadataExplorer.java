@@ -61,8 +61,9 @@ import com.sqleo.environment.mdi.ClientMetadataExplorer;
 import com.sqleo.querybuilder.ViewObjects;
 
 
-public class MetadataExplorer extends BorderLayoutPanel implements ChangeListener,TreeSelectionListener
-{
+public class MetadataExplorer extends BorderLayoutPanel implements ChangeListener,TreeSelectionListener {
+	private static final long serialVersionUID = 1L;
+
 	public static final String ALL_TABLE_TYPES_LABEL = I18n.getString("querybuilder.objetctype.all", ViewObjects.ALL_TABLE_TYPES);	
 	
 	private CardLayout cv;
@@ -117,7 +118,7 @@ public class MetadataExplorer extends BorderLayoutPanel implements ChangeListene
 		{
 			Application.session.mount(Application.ENTRY_JDBC);
 			Application.session.home();
-			for(Enumeration eDv = Application.session.jumps(); eDv.hasMoreElements();)
+			for(Enumeration<?> eDv = Application.session.jumps(); eDv.hasMoreElements();)
 			{
 				UoDriver uoDv = new UoDriver();
 				uoDv.name = eDv.nextElement().toString();
@@ -142,7 +143,7 @@ public class MetadataExplorer extends BorderLayoutPanel implements ChangeListene
 					navigator.add(uoDv);
 				}
 				
-				for(Enumeration eDs = Application.session.jumps(); eDs.hasMoreElements();)
+				for(Enumeration<?> eDs = Application.session.jumps(); eDs.hasMoreElements();)
 				{
 					UoDatasource uoDs = new UoDatasource(uoDv);
 					uoDs.name = eDs.nextElement().toString();
@@ -182,7 +183,7 @@ public class MetadataExplorer extends BorderLayoutPanel implements ChangeListene
 					
 					/* links */
 					UoLinks uoLk = (UoLinks)navigator.getSelectionNode().getLastLeaf().getUserObject();
-					for(Enumeration eLk = Application.session.jumps(); eLk.hasMoreElements();)
+					for(Enumeration<?> eLk = Application.session.jumps(); eLk.hasMoreElements();)
 					{
 						String group = eLk.nextElement().toString();
 					
@@ -305,6 +306,7 @@ public class MetadataExplorer extends BorderLayoutPanel implements ChangeListene
 		cv.last((Container)((JSplitPane)this.getComponent(0)).getRightComponent());
 	}
 	
+	@Override
 	public void stateChanged(ChangeEvent ce)
 	{
 		if(tp.getSelectedIndex() == 0)
@@ -315,6 +317,7 @@ public class MetadataExplorer extends BorderLayoutPanel implements ChangeListene
 		onSomethingChanged();
 	}
 	
+	@Override
 	public void valueChanged(TreeSelectionEvent tse)
 	{
 		onSomethingChanged();
