@@ -30,8 +30,8 @@ import java.util.Vector;
 
 public class Classpath
 {
-	private static Vector startup = new Vector();
-	private static Vector runtime = new Vector();
+	private static Vector<String> startup = new Vector<String>();
+	private static Vector<String> runtime = new Vector<String>();
 	
 	static
 	{
@@ -40,8 +40,10 @@ public class Classpath
 		String extDir	= System.getProperty("java.ext.dirs");
 		StringTokenizer tokenizer = null;
 		
+		String sep = System.getProperty("path.separator");
+
 		if(bootPath!=null) {
-			tokenizer = new StringTokenizer(bootPath,";");
+			tokenizer = new StringTokenizer(bootPath, sep);
 			while(tokenizer.hasMoreTokens())
 			{
 				String filename = tokenizer.nextToken();
@@ -51,7 +53,7 @@ public class Classpath
 		}
 		
 		if(classPath!=null) {
-			tokenizer = new StringTokenizer(classPath,";");
+			tokenizer = new StringTokenizer(classPath, sep);
 			while(tokenizer.hasMoreTokens())
 			{
 				String filename = tokenizer.nextToken();
@@ -71,9 +73,9 @@ public class Classpath
 		}
 	}
 	
-	public static ArrayList getLibraries()
+	public static ArrayList<String> getLibraries()
 	{
-		ArrayList libs = new ArrayList();
+		ArrayList<String> libs = new ArrayList<String>();
 		
 		libs.addAll(startup.subList(0,startup.size()));
 		libs.addAll(runtime.subList(0,runtime.size()));
@@ -94,7 +96,8 @@ public class Classpath
 	public static ClassLoader loadLibrary(String library) throws MalformedURLException
 	{
 		if(Classpath.isRuntime(library))
-			return new URLClassLoader(new URL[]{new File(library).toURL()},ClassLoader.getSystemClassLoader());
+			return new URLClassLoader(new URL[] {new File(library).toURI().toURL()},
+									  ClassLoader.getSystemClassLoader());
 		
 		return ClassLoader.getSystemClassLoader();
 	}

@@ -47,7 +47,7 @@ public class UoDriver
 	
 	public static void loadDefaults(MetadataExplorer explorer)
 	{
-		UoDriver[] drivers = new UoDriver[14];
+		UoDriver[] drivers = new UoDriver[15];
 
 		drivers[0] = new UoDriver();
 		drivers[0].name			= "ODBC Bridge";
@@ -115,15 +115,20 @@ public class UoDriver
 		drivers[12].example		= "jdbc:derby:<derbyDB>;create=true";
 
 		drivers[13] = new UoDriver();
-		drivers[13].name			= "MySQL (MariaDB Jdbc Driver)";
+		drivers[13].name		= "MySQL (MariaDB Jdbc Driver)";
 		drivers[13].classname	= "org.mariadb.jdbc.Driver";
 		drivers[13].example		= "jdbc:mysql://<host>:<port3306>";
+
+		drivers[14] = new UoDriver();
+		drivers[14].name		= "Sqlite 3";
+		drivers[14].classname	= "org.sqlite.JDBC";
+		drivers[14].example		= "jdbc:sqlite:/<path to db file>";
 
 		for(int i=0; i<drivers.length; i++)
 		{
 			try
 			{
-				ConnectionAssistant.declare(null,drivers[i].classname,true);
+				ConnectionAssistant.declare(null,drivers[i].classname, true);
 			}
 			catch (Exception e)
 			{

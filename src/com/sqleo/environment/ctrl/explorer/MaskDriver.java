@@ -44,7 +44,7 @@ public class MaskDriver extends JPanel
 	private JTextField txtName;
 	private JTextField txtFile;
 	private JTextField txtExample;
-	private JComboBox cbxDriver;
+	private JComboBox<String> cbxDriver;
 		
 	MaskDriver()
 	{
@@ -53,10 +53,10 @@ public class MaskDriver extends JPanel
 		GridBagLayout gbl = new GridBagLayout();
 		setLayout(gbl);
 		
-		addField(gbl,"name:"		,txtName = new JTextField()		,0);
-		addField(gbl,"file:"		,txtFile = new JTextField()		,25);
-		addField(gbl,"driver:"		,cbxDriver = new JComboBox()	,5);
-		addField(gbl,"example:"		,txtExample = new JTextField()	,5);
+		addField(gbl,"name:",	txtName    = new JTextField(),		 0);
+		addField(gbl,"file:",	txtFile    = new JTextField(),		 25);
+		addField(gbl,"driver:",	cbxDriver  = new JComboBox<String>(),5);
+		addField(gbl,"example:",txtExample = new JTextField(),	     5);
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor		= GridBagConstraints.WEST;
@@ -154,17 +154,17 @@ public class MaskDriver extends JPanel
 				
 				Application.session.home();
 				Application.session.jump("metaview." + uoDv.name);
-				for(Enumeration e = Application.session.jumps(); e.hasMoreElements();)
+				for(Enumeration<?> e = Application.session.jumps(); e.hasMoreElements();)
 				{
 					String metaview = e.nextElement().toString();
-					Iterator i = Application.session.jump(metaview).iterator();
+					Iterator<?> i = Application.session.jump(metaview).iterator();
 					
 					Application.session.home();
 					Application.session.jump("metaview." + name);
 					Application.session.jump(metaview);
 					
 					while(i.hasNext())
-						Application.session.jump().add(i.next());
+						Application.session.jump().add((Object[]) i.next());
 					
 					Application.session.home();
 					Application.session.jump("metaview." + uoDv.name);

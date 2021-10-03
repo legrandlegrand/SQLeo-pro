@@ -65,7 +65,6 @@ import com.sqleo.environment.mdi.MDIClient;
 import com.sqleo.querybuilder.DiagramLayout;
 import com.sqleo.querybuilder.DiagramLoader;
 import com.sqleo.querybuilder.QueryBuilder;
-import com.sqleo.querybuilder.beans.Entity;
 import com.sqleo.querybuilder.syntax.QueryTokens;
 
 
@@ -255,7 +254,7 @@ public abstract class AbstractViewObjects extends ListView implements MouseListe
 			if(QueryBuilder.selectAllColumns)
 			{
 				TableMetaData tmd = new TableMetaData(AbstractViewObjects.this.getHandlerKey(),schema,name);
-				ArrayList al = tmd.getColumns();
+				ArrayList<?> al = tmd.getColumns();
 				for(int i=0; i<al.size(); i++)
 				{
 					QueryTokens.Column column = new QueryTokens.Column(table,tmd.getColumnProperty(i,TableMetaData.IDX_COL_COLUMN_NAME));

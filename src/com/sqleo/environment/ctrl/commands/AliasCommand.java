@@ -14,12 +14,13 @@ public class AliasCommand extends AbstractCommand {
 	
 	public static Hashtable<String,String> ALIAS_MAP;
 	
+	@SuppressWarnings("unchecked")
 	public static void loadAliases(){
 		if(Application.session.mount(Application.ENTRY_ALIASES).size() == 0)
 		{
-			Application.session.mount(Application.ENTRY_ALIASES).add(new Hashtable<String,String>());
+			Application.session.mount(Application.ENTRY_ALIASES).add(new Hashtable<String, String>());
 		}
-		ALIAS_MAP = (Hashtable)Application.session.mount(Application.ENTRY_ALIASES).get(0);
+		ALIAS_MAP = (Hashtable<String, String>)Application.session.mount(Application.ENTRY_ALIASES).get(0);
 		
 	}
 	

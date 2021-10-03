@@ -189,9 +189,9 @@ public class SideNavigator extends TreeView implements TreeSelectionListener
 						reload(source);
 						Application.window.connectionOpened(uoDs.getKey());
 					}
-					catch (Exception e)
-					{
-						Application.alert("auto connect on " + uoDs.name,Text.wrap(e.toString(),100));
+					catch (Exception e) {
+						e.printStackTrace();
+						Application.alert("[ERROR] auto connect on " + uoDs.name, Text.wrap(e.toString(), 100));
 					}
 				}
 			}			
@@ -272,24 +272,24 @@ public class SideNavigator extends TreeView implements TreeSelectionListener
 			{
 				ConnectionHandler ch = ConnectionAssistant.getHandler(uoDs.getKey());
 				
-				ArrayList alNames = ch.getArrayList("$schema_names");
-				ArrayList alTypes = ch.getArrayList("$table_types");
+				ArrayList<?> alNames = ch.getArrayList("$schema_names");
+				ArrayList<?> alTypes = ch.getArrayList("$table_types");
 				
 				if(alNames.isEmpty() || uoDs.schema != null)
 				{
-					for(Iterator i=alTypes.iterator(); i.hasNext();)
+					for(Iterator<?> i=alTypes.iterator(); i.hasNext();)
 						node.add(new DefaultMutableTreeNode(i.next().toString(),false));
 					
 					node.add(new DefaultMutableTreeNode(MetadataExplorer.ALL_TABLE_TYPES_LABEL,false));
 				}
 				else
 				{
-					for(Iterator i1=alNames.iterator(); i1.hasNext();)
+					for(Iterator<?> i1=alNames.iterator(); i1.hasNext();)
 					{
 						DefaultMutableTreeNode child;
 						node.add(child = new DefaultMutableTreeNode(i1.next().toString(),true));
 						
-						for(Iterator i2=alTypes.iterator(); i2.hasNext();)
+						for(Iterator<?> i2=alTypes.iterator(); i2.hasNext();)
 							child.add(new DefaultMutableTreeNode(i2.next().toString(),false));
 						
 						child.add(new DefaultMutableTreeNode(MetadataExplorer.ALL_TABLE_TYPES_LABEL,false));
@@ -383,8 +383,9 @@ public class SideNavigator extends TreeView implements TreeSelectionListener
 		}
 	}
 	
-	private class InternalTreeCellRenderer extends DefaultTreeCellRenderer
-	{
+	private class InternalTreeCellRenderer extends DefaultTreeCellRenderer {
+		private static final long serialVersionUID = 1L;
+
 		public Icon getLeafIcon()
 		{
 			return Application.resources.getIcon(Application.ICON_EXPLORER_TYPES);

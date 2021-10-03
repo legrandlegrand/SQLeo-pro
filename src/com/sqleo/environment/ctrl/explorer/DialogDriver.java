@@ -214,13 +214,20 @@ public class DialogDriver extends AbstractDialogConfirm
 		try
 		{
 			ZipFile zf = new ZipFile(library);
-			for(Enumeration entries = zf.entries(); entries.hasMoreElements();)
+			for(Enumeration<?> entries = zf.entries(); entries.hasMoreElements();)
 			{
+				// ody:
+				// https://github.com/xerial/sqlite-jdbc/blob/master/src/main/java/org/sqlite/JDBC.java 
+				// String name = ((ZipEntry)entries.nextElement()).getName();
+				// if(name.endsWith(".class") && name.indexOf("$")==-1 && name.toLowerCase().indexOf("driver")!=-1) {
+				// 	name = name.replace('/', '.');
+				// 	mDv.addDriver(name.substring(0, name.indexOf(".class")));
+				// }
 				String name = ((ZipEntry)entries.nextElement()).getName();
-				if(name.endsWith(".class") && name.indexOf("$")==-1 && name.toLowerCase().indexOf("driver")!=-1)
-				{
-					name = name.replace('/','.');
-					mDv.addDriver(name.substring(0,name.indexOf(".class")));
+				if ( name.endsWith(".class") && name.indexOf("$") < 0
+				 && (name.toLowerCase().indexOf("driver") >= 0 || name.toLowerCase().indexOf("jdbc") >= 0)) {
+					name = name.replace('/', '.');
+					mDv.addDriver(name.replaceFirst(".class$", ""));
 				}
 			}
 			zf.close();

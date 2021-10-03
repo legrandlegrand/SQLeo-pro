@@ -57,25 +57,25 @@ public class Store
 	private Object[] cmp;
 	
 	//Cache tables prefixTree, Cache table columns, Cache joinColums (All needed for autocomplete feature)
-	private Hashtable columnsCache;
+	private Hashtable<String, Object> columnsCache;
 	
 	private LinkedList<SQLHistoryData> sqlHistoryData;
 	
 	public Store()
 	{
-		mountpoints = new Hashtable();
-		columnsCache = new Hashtable();
+		mountpoints = new Hashtable<String, Object[]>();
+		columnsCache = new Hashtable<String, Object>();
 		sqlHistoryData = new LinkedList<SQLHistoryData>();
 		
 		cmp = new Object[3];
-		cmp[INDEX_DATA] = new ArrayList();
-		cmp[INDEX_SUBS] = new Hashtable();
+		cmp[INDEX_DATA] = new ArrayList<Object>();
+		cmp[INDEX_SUBS] = new Hashtable<Object, Object>();
 	}
 	
 	public void addSQLToHistory(final SQLHistoryData historyData){
 		final Integer max =  Preferences.getInteger(DialogPreferences.MAX_QUERIES_IN_HISTORY, 
 				DialogPreferences.DEFAULT_MAX_QUERIES_IN_HISTORY);
-		if(max>0){
+		if(max > 0) {
 			//notify sqlhistory viewer
 			final MDIClient historyView = Application.window.getClient(ClientSQLHistoryViewer.DEFAULT_TITLE);
 			if(sqlHistoryData.size() == max){
@@ -88,7 +88,7 @@ public class Store
 			}
 			//add to first, as we need to store last N queries by timestamp
 			sqlHistoryData.addFirst(historyData);
-			if(historyView!=null){
+			if(historyView != null){
 				final ClientSQLHistoryViewer historyViewer = (ClientSQLHistoryViewer)historyView;
 				historyViewer.addRowAtFirst(historyData);
 			}
@@ -96,7 +96,7 @@ public class Store
 	}
 	
 	public void removeSQLFromHistory(final String timestamp){
-		for(int i = 0; i<sqlHistoryData.size();i++){
+		for(int i = 0; i < sqlHistoryData.size(); i++){
 			if(sqlHistoryData.get(i).getTimestamp().equals(timestamp)){
 				sqlHistoryData.remove(i);
 				break;
@@ -138,13 +138,12 @@ public class Store
 		return mountpoints.containsKey(entry);
 	}
 
-	public ArrayList mount()
-	{
-		return (ArrayList)cmp[INDEX_DATA];
+	@SuppressWarnings("unchecked")
+	public ArrayList<Object> mount() {
+		return (ArrayList<Object>)cmp[INDEX_DATA];
 	}
 	
-	public ArrayList mount(String entry)
-	{
+	public ArrayList<Object> mount(String entry) {
 		if(mountpoints.containsKey(entry))
 		{
 			cmp = (Object[])mountpoints.get(entry);
@@ -152,8 +151,8 @@ public class Store
 		else
 		{
 			cmp = new Object[3];
-			cmp[INDEX_DATA] = new ArrayList();
-			cmp[INDEX_SUBS] = new Hashtable();
+			cmp[INDEX_DATA] = new ArrayList<Object>();
+			cmp[INDEX_SUBS] = new Hashtable<Object, Object>();
 			
 			mountpoints.put(entry,cmp);
 		}
@@ -161,47 +160,44 @@ public class Store
 		return mount();
 	}
 	
-	public Enumeration mounts()
-	{
+	public Enumeration<String> mounts() {
 		return mountpoints.keys();
 	}
 	
 	public void umount(String entry)
 	{
 		cmp = new Object[3];
-		cmp[INDEX_DATA] = new ArrayList();
-		cmp[INDEX_SUBS] = new Hashtable();
+		cmp[INDEX_DATA] = new ArrayList<Object>();
+		cmp[INDEX_SUBS] = new Hashtable<Object, Object>();
 		
 		mountpoints.remove(entry);
 	}
 
 	public boolean canJump(String sub)
 	{
-		Hashtable subs = (Hashtable)cmp[INDEX_SUBS];
+		Hashtable<?, ?> subs = (Hashtable<?, ?>)cmp[INDEX_SUBS];
 		return subs.containsKey(sub);
 	}
 	
-	public ArrayList jump()
-	{
-		return (ArrayList)((Object[])cmp[INDEX_JUMP])[INDEX_DATA];
+	@SuppressWarnings("unchecked")
+	public ArrayList<Object> jump() {
+		return (ArrayList<Object>)((Object[])cmp[INDEX_JUMP])[INDEX_DATA];
 	}
 	
-	public ArrayList jump(String sub)
-	{
-		Hashtable subs = (Hashtable)cmp[INDEX_SUBS];
+	@SuppressWarnings("unchecked")
+	public ArrayList<Object> jump(String sub) {
+		Hashtable<String, Object[]> subs = (Hashtable<String, Object[]>)cmp[INDEX_SUBS];
 		if(cmp[INDEX_JUMP] != null)
-		    subs = (Hashtable)((Object[])cmp[INDEX_JUMP])[INDEX_SUBS];
+		    subs = (Hashtable<String, Object[]>)((Object[])cmp[INDEX_JUMP])[INDEX_SUBS];
 		
-		if(subs.containsKey(sub))
-		{
+		if(subs.containsKey(sub)) {
 			cmp[INDEX_JUMP] = (Object[])subs.get(sub);
 		}
-		else
-		{
+		else {
 			/* jump-point */
 			Object[] jp = new Object[2];
-			jp[INDEX_DATA] = new ArrayList();
-			jp[INDEX_SUBS] = new Hashtable();
+			jp[INDEX_DATA] = new ArrayList<Object>();
+			jp[INDEX_SUBS] = new Hashtable<Object, Object>();
 			
 			subs.put(sub,jp);
 			cmp[INDEX_JUMP] = jp;
@@ -210,24 +206,23 @@ public class Store
 		return jump();
 	}
 	
-	public ArrayList jump(String[] subs)
-	{
+	public ArrayList<Object> jump(String[] subs) {
 		for(int i=0; i<subs.length; i++) jump(subs[i]);
 		return jump();
 	}
 
-	public Enumeration jumps()
+	public Enumeration<?> jumps()
 	{
-		Hashtable subs = (Hashtable)cmp[INDEX_SUBS];
+		Hashtable<?, ?> subs = (Hashtable<?, ?>)cmp[INDEX_SUBS];
 		if(cmp[INDEX_JUMP] != null)
-		    subs = (Hashtable)((Object[])cmp[INDEX_JUMP])[INDEX_SUBS];
+		    subs = (Hashtable<?, ?>)((Object[])cmp[INDEX_JUMP])[INDEX_SUBS];
 		
 	    return subs.keys();
 	}
 	
 	public void ujump(String sub)
 	{
-		Hashtable subs = (Hashtable)cmp[INDEX_SUBS];
+		Hashtable<?, ?> subs = (Hashtable<?, ?>)cmp[INDEX_SUBS];
 		subs.remove(sub);
 		
 		home();
@@ -242,11 +237,11 @@ public class Store
 
 	public void reset()
 	{
-		mountpoints = new Hashtable();
+		mountpoints = new Hashtable<String, Object[]>();
 		
 		cmp = new Object[3];
-		cmp[INDEX_DATA] = new ArrayList();
-		cmp[INDEX_SUBS] = new Hashtable();
+		cmp[INDEX_DATA] = new ArrayList<Object>();
+		cmp[INDEX_SUBS] = new Hashtable<Object, Object>();
 	}
 	
 	public void load(String filename) throws IOException, ClassNotFoundException
@@ -268,7 +263,7 @@ public class Store
 	{
 		ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(filename));
 		
-		for(Enumeration e = mounts(); e.hasMoreElements();)
+		for(Enumeration<String> e = mounts(); e.hasMoreElements();)
 		{
 			String name = e.nextElement().toString();
 			zout.putNextEntry(new ZipEntry(name));
@@ -281,21 +276,26 @@ public class Store
 		}
 		zout.close();
 	}
-	public void loadXMLAndMetaviews(String filename,String metaviewFileName) throws IOException, ClassNotFoundException
-	{
+
+	public void loadXMLAndMetaviews(String filename, String metaviewFileName)
+			throws IOException, ClassNotFoundException {
+		System.out.println("Loading preferences:");
+		System.out.println(filename);
+		System.out.println(metaviewFileName);
+
 		XMLDecoder decoder = new XMLDecoder(
                 new BufferedInputStream(
                     new FileInputStream(filename)));
 		ZipInputStream zin = new ZipInputStream(new FileInputStream(metaviewFileName));
 		Object zipContent = null; 
-		for(ZipEntry entry = null; (entry = zin.getNextEntry())!=null;)
-		{
+
+		for(@SuppressWarnings("unused")
+		ZipEntry entry = null; (entry = zin.getNextEntry())!=null;) {
 			zipContent = new ObjectInputStream(zin).readObject();
 		}
 		
-		try{
-			while(true)
-			{
+		try {
+			while(true) {
 				Object name = decoder.readObject();
 				String nameStr = (String)name;
 				Object[] content = new Object[3];
@@ -306,11 +306,11 @@ public class Store
 					content[INDEX_DATA] = decoder.readObject();
 					content[INDEX_SUBS] = decoder.readObject();
 				}
-				this.put(nameStr,content);
+				this.put(nameStr, content);
 			}
-		}catch(ArrayIndexOutOfBoundsException e){
+		} catch(ArrayIndexOutOfBoundsException e) {
 			//REACHED END OF FILE
-		}finally{
+		} finally{
 			decoder.close();
 			zin.close();
 		}
@@ -341,7 +341,7 @@ public class Store
                        new FileOutputStream(filename)));
 		ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(metaviewFileName));
 
-		for(Enumeration e = mounts(); e.hasMoreElements();)
+		for(Enumeration<?> e = mounts(); e.hasMoreElements();)
 		{
 			String name = e.nextElement().toString();
 			encoder.writeObject(name);
@@ -362,9 +362,9 @@ public class Store
 		
 	}
 
-	private void print()
-	{
-		Enumeration e = mountpoints.keys();
+	@SuppressWarnings("unused")
+	private void print() {
+		Enumeration<String> e = mountpoints.keys();
 		while(e.hasMoreElements())
 		{
 			String entry = e.nextElement().toString();
@@ -374,17 +374,15 @@ public class Store
 		}
 	}
 	
-	private void print(String indent,Object[] obj)
-	{
-		ArrayList al = (ArrayList)obj[INDEX_DATA];
-//		System.out.println(indent + al);
+	private void print(String indent,Object[] obj) {
+		ArrayList<?> al = (ArrayList<?>)obj[INDEX_DATA];
 		System.out.print(indent + al.size() + "{");
 		for(int i=0; i<al.size(); i++)
 			System.out.print(al.get(i) + ",");
 		System.out.println("}");
 		
-		Hashtable h = (Hashtable)obj[INDEX_SUBS];
-		Enumeration e = h.keys();
+		Hashtable<?, ?> h = (Hashtable<?, ?>)obj[INDEX_SUBS];
+		Enumeration<?> e = h.keys();
 		while(e.hasMoreElements())
 		{
 			String entry = e.nextElement().toString();

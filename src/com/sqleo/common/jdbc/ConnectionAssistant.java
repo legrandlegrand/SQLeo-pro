@@ -1,4 +1,5 @@
-/*
+/* 
+ * Modified by SQLeo pro. For change log, see github commit history at hithub.com/odys-z/SQLeo-Pro.
  *
  * Modified by SQLeo Visual Query Builder :: java database frontend with join definitions
  * Copyright (C) 2012 anudeepgade@users.sourceforge.net
@@ -27,7 +28,9 @@ package com.sqleo.common.jdbc;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.sql.Connection;
 import java.sql.Driver;
+import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.Properties;
 import java.util.Set;
@@ -35,20 +38,30 @@ import java.util.Set;
 import com.sqleo.environment.Application;
 import com.sqleo.environment.Preferences;
 import com.sqleo.environment.io.ManualDBMetaData;
-import com.sqleo.environment.io.ManualTableMetaData;
 
 
 public class ConnectionAssistant
 {
-    private static Hashtable drivers = new Hashtable();
-	private static Hashtable connections = new Hashtable();
-	private static Hashtable dbMetaDatas = new Hashtable();
+    private static Hashtable<String, Driver> drivers = new Hashtable<String, Driver>();
+	private static Hashtable<String, ConnectionHandler> connections = new Hashtable<String, ConnectionHandler>();
+	private static Hashtable<String, ManualDBMetaData> dbMetaDatas = new Hashtable<String, ManualDBMetaData>();
     
-    /* connection */
+    /**open connection handler.
+     * @param keycad dirver key
+     * @param keycah connection handler key
+     * @param url	the URL of the database to which to connect
+     * @param uid
+     * @param pwd
+     * @param fkDefFileName
+     * @param readonly
+     * @return connection handler
+     * @throws Exception
+     */
     private static ConnectionHandler openInternal(String keycad, String keycah, String url, String uid, String pwd,String fkDefFileName, boolean readonly) throws Exception
     {
         Driver d = (Driver)drivers.get(keycad);
         if(null == d){
+        	// ody: should DA tier just throw an exception other than report error to UI?
         	Application.alert(Application.PROGRAM,"No driver found, please install one by selecting driver from Install button provided on the bottom of parent node");     	
         	return null;
         }
@@ -61,7 +74,11 @@ public class ConnectionAssistant
     	if(pwd != null)
     	    info.put("password", pwd);
     	
-		ConnectionHandler ch = new ConnectionHandler(d.connect(url,info), readonly);
+    	Connection c = d.connect(url,info);
+    	if (c == null)
+    		throw new SQLException(String.format("Connecting fialed: %s, %s", url, info.values()));
+
+		ConnectionHandler ch = new ConnectionHandler(c, readonly);
 		connections.put(keycah,ch);
 		
 		if(fkDefFileName!=null){
@@ -125,7 +142,7 @@ public class ConnectionAssistant
 	        else
 	        {
 			    File file = new File(library);
-			    ClassLoader cl = new URLClassLoader(new URL[] {file.toURL()},ClassLoader.getSystemClassLoader());
+			    ClassLoader cl = new URLClassLoader(new URL[] {file.toURI().toURL()},ClassLoader.getSystemClassLoader());
 			    
 			    declare(keycad,Class.forName(classname,true,cl));
 			}
@@ -134,7 +151,7 @@ public class ConnectionAssistant
         return new String(keycad);
     }
 
-	private static void declare(String keycad, Class c) throws Exception
+	private static void declare(String keycad, Class<?> c) throws Exception
 	{
 		Driver d = (Driver)c.newInstance();        
 		declare(keycad,d);
@@ -145,12 +162,12 @@ public class ConnectionAssistant
 		drivers.put(keycad,d);
 	}
     
-	public static Set getDeclarations()
+	public static Set<?> getDeclarations()
 	{
 		return drivers.keySet();
 	}
 	
-	public static Set getHandlers()
+	public static Set<?> getHandlers()
 	{
 		return connections.keySet();
 	}	

@@ -247,7 +247,7 @@ public class MetadataExplorer extends BorderLayoutPanel implements ChangeListene
 				
 				/* links */
 				UoLinks uoLk = (UoLinks)child.getLastLeaf().getUserObject();
-				Iterator iG = uoLk.getGroups().iterator();
+				Iterator<?> iG = uoLk.getGroups().iterator();
 				while(iG.hasNext())
 				{
 					String group = iG.next().toString();
@@ -255,10 +255,10 @@ public class MetadataExplorer extends BorderLayoutPanel implements ChangeListene
 					Application.session.home();
 					Application.session.jump(new String[]{uoDv.name,uoDs.name,group});
 					
-					Iterator iK = uoLk.getLinks(group).iterator();
+					Iterator<?> iK = uoLk.getLinks(group).iterator();
 					while(iK.hasNext())
 					{
-						Application.session.jump().add(iK.next());
+						Application.session.jump().add((Object[]) iK.next());
 					}
 				}
 			}

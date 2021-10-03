@@ -37,7 +37,7 @@ public class ConnectionHandler
 {
 	// Ticket #336 - read only connection
     private ConnectionWrapper connection;
-    private Hashtable metacache;
+    private Hashtable<String, Object> metacache;
     
     public ConnectionHandler(Connection connection, boolean readonly)
     {
@@ -54,7 +54,7 @@ public class ConnectionHandler
         	this.connection.addStatementInterceptor(new ReadonlySqlCommandInterceptor());
         }
 		
-		metacache = new Hashtable();
+		metacache = new Hashtable<String, Object>();
 		try
 		{
 			metacache.put("$maxColumnNameLength",new Integer(connection.getMetaData().getMaxColumnNameLength()));
@@ -65,8 +65,9 @@ public class ConnectionHandler
 	
 			metacache.put("$supportsSchema", new Boolean(connection.getMetaData().supportsSchemasInTableDefinitions()) );
 		}
-		catch(Exception e)
-		{ /* do_nothing	*/ }
+		catch(Exception e) { 
+			e.printStackTrace();
+		}
 		
 		loadSchemas();
 		loadTableTypes();
@@ -80,7 +81,7 @@ public class ConnectionHandler
     
 	private void loadSchemas()
 	{
-		ArrayList schemas = new ArrayList();
+		ArrayList<Object> schemas = new ArrayList<Object>();
 		metacache.put("$schema_names",schemas);
 		
 		try
@@ -113,7 +114,7 @@ public class ConnectionHandler
     
 	private void loadTableTypes()
 	{
-		ArrayList tableTypes = new ArrayList();
+		ArrayList<Object> tableTypes = new ArrayList<Object>();
 		metacache.put("$table_types",tableTypes);
 		
 		try
@@ -132,7 +133,7 @@ public class ConnectionHandler
 	
 	private void loadConnectionInfos()
 	{
-		ArrayList infos = new ArrayList();
+		ArrayList<Object> infos = new ArrayList<Object>();
 		metacache.put("$connection_infos",infos);
 		
 		try
@@ -162,28 +163,24 @@ public class ConnectionHandler
 	}
     
     /* bad */
-    public Connection get()
-    {
+    public Connection get() {
     	return connection;
     }
     
-	public void close() throws SQLException
-	{
+	public void close() throws SQLException {
 		connection.close();
 	}
 	
-	public ArrayList getArrayList(String key)
-	{
-		return (ArrayList)metacache.get(key);
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getArrayList(String key) {
+		return (ArrayList<String>)metacache.get(key);
 	}
 	
-	public Object getObject(String key)
-	{
+	public Object getObject(String key) {
 		return metacache.get(key);
 	}
 
-	public String getDatabaseProductName() throws SQLException
-	{
+	public String getDatabaseProductName() throws SQLException {
 		return connection.getMetaData().getDatabaseProductName();
 	}
 

@@ -32,8 +32,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -46,27 +44,28 @@ import javax.swing.border.LineBorder;
 
 import com.sqleo.common.gui.CommandButton;
 import com.sqleo.common.jdbc.ConnectionAssistant;
+import com.sqleo.common.util.I18n;
 import com.sqleo.environment.Application;
 import com.sqleo.environment.mdi._ConnectionListener;
-import com.sqleo.common.util.I18n;
 
 
-public class SideSearchCriteria extends JPanel implements ActionListener, _ConnectionListener
-{
-    private String[] operators = {
+public class SideSearchCriteria extends JPanel implements ActionListener, _ConnectionListener {
+	private static final long serialVersionUID = 1L;
+
+	private String[] operators = {
 		I18n.getString("metadataexplorer.action.Contains","contains"),
 		I18n.getString("metadataexplorer.action.Equals","equals"),
 		I18n.getString("metadataexplorer.action.StartWith","starts with"),
 		I18n.getString("metadataexplorer.action.EndWith","ends with")};
     private ViewSearchResult rView;
     
-	private JComboBox cbxConnections;
-	private JComboBox cbxTableTypes;
+	private JComboBox<String> cbxConnections;
+	private JComboBox<String> cbxTableTypes;
 
 	private CommandButton cbStart;
 	private CommandButton cbReset;
 	
-	private JComboBox[] cbx;
+	private JComboBox<?>[] cbx;
 	private JTextField[] txt;
     
     public SideSearchCriteria()
@@ -104,10 +103,15 @@ public class SideSearchCriteria extends JPanel implements ActionListener, _Conne
 	        if (evt.getStateChange() == ItemEvent.SELECTED && connection!=null) {
 	        	cbxTableTypes.removeAllItems();
 				cbxTableTypes.addItem("ALL");
-				ArrayList<String> types =  ConnectionAssistant.getHandler(connection).getArrayList("$table_types");
+				if (ConnectionAssistant.hasHandler(connection)) {
+					ArrayList<String> types =  ConnectionAssistant
+							.getHandler(connection)
+							.getArrayList("$table_types");
+
 					for(String s : types){
 						cbxTableTypes.addItem(s);
 					}
+				}
 	        } 
 		}
     }
@@ -127,7 +131,7 @@ public class SideSearchCriteria extends JPanel implements ActionListener, _Conne
         gbc.fill		= GridBagConstraints.HORIZONTAL;
         gbc.weightx		= 1.0;
         
-        cbx[idx] = new JComboBox(operators);
+        cbx[idx] = new JComboBox<String>(operators);
         gbl.setConstraints(cbx[idx],gbc);
         add(cbx[idx]);
         
@@ -155,7 +159,7 @@ public class SideSearchCriteria extends JPanel implements ActionListener, _Conne
         gbc.fill	= GridBagConstraints.BOTH;
         gbc.insets	= new Insets(0,5,8,5);
         
-		cbxConnections = new JComboBox();
+		cbxConnections = new JComboBox<String>();
         gbl.setConstraints(cbxConnections,gbc);
         add(cbxConnections);
     }
@@ -173,7 +177,7 @@ public class SideSearchCriteria extends JPanel implements ActionListener, _Conne
         gbc.fill	= GridBagConstraints.BOTH;
         gbc.insets	= new Insets(0,5,8,5);
         
-		cbxTableTypes = new JComboBox();
+		cbxTableTypes = new JComboBox<String>();
         gbl.setConstraints(cbxTableTypes,gbc);
         add(cbxTableTypes);
     }

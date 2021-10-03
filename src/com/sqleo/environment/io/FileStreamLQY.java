@@ -62,7 +62,7 @@ public class FileStreamLQY
 			
 			qstore.home();
 			qstore.jump("order_by_clause");
-			for(Iterator i = qstore.jump().iterator(); i.hasNext();)
+			for(Iterator<?> i = qstore.jump().iterator(); i.hasNext();)
 			{
 				QueryTokens.Sort token = toOrder(i.next());
 				model.addOrderByClause(token);
@@ -91,7 +91,7 @@ public class FileStreamLQY
 		qstore.home();
 		qstore.jump("query_expression_" + idx);
 		qstore.jump("select_list");
-		for(Iterator i = qstore.jump().iterator(); i.hasNext();)
+		for(Iterator<?> i = qstore.jump().iterator(); i.hasNext();)
 		{
 			QueryTokens._Expression token = toExpression(i.next());
 			qe.getQuerySpecification().addSelectList(token);
@@ -100,7 +100,7 @@ public class FileStreamLQY
 		qstore.home();
 		qstore.jump("query_expression_" + idx);
 		qstore.jump("from_clause");
-		for(Iterator i = qstore.jump().iterator(); i.hasNext();)
+		for(Iterator<?> i = qstore.jump().iterator(); i.hasNext();)
 		{
 			QueryTokens._TableReference token = toTableReference(i.next());
 			qe.getQuerySpecification().addFromClause(token);
@@ -109,7 +109,7 @@ public class FileStreamLQY
 		qstore.home();
 		qstore.jump("query_expression_" + idx);
 		qstore.jump("where_clause");
-		for(Iterator i = qstore.jump().iterator(); i.hasNext();)
+		for(Iterator<?> i = qstore.jump().iterator(); i.hasNext();)
 		{
 			QueryTokens.Condition token = toCondition(i.next());
 			qe.getQuerySpecification().addWhereClause(token);
@@ -118,7 +118,7 @@ public class FileStreamLQY
 		qstore.home();
 		qstore.jump("query_expression_" + idx);
 		qstore.jump("group_by_clause");
-		for(Iterator i = qstore.jump().iterator(); i.hasNext();)
+		for(Iterator<?> i = qstore.jump().iterator(); i.hasNext();)
 		{
 			QueryTokens.Group token = toGroup(i.next());
 			qe.getQuerySpecification().addGroupByClause(token);
@@ -127,7 +127,7 @@ public class FileStreamLQY
 		qstore.home();
 		qstore.jump("query_expression_" + idx);
 		qstore.jump("having_clause");
-		for(Iterator i = qstore.jump().iterator(); i.hasNext();)
+		for(Iterator<?> i = qstore.jump().iterator(); i.hasNext();)
 		{
 			QueryTokens.Condition token = toCondition(i.next());
 			qe.getQuerySpecification().addHavingClause(token);
