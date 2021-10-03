@@ -80,15 +80,14 @@ public class Application extends Appearance implements _Constants,_Version
     private static String CONFIG_FOLDER = "";
 
     public static CommandRunner commandRunner;
-    
-    private static void loadIcons()
-    {
-	boolean Icon_scaling = false;
+
+    private static void loadIcons() {
+    	boolean Icon_scaling = false;
 
 		resources.loadIcon(ICON_CONNECT		,"/images/connect.png");
 		resources.loadIcon(ICON_DISCONNECT	,"/images/disconnect.png");
 		resources.loadIcon(ICON_ACCEPT	,"/images/accept.png");
-    		resources.loadIcon(ICON_SAVE	,"/images/disk.png");
+    	resources.loadIcon(ICON_SAVE	,"/images/disk.png");
 		resources.loadIcon(ICON_STOP	,"/images/stop.png");
 		resources.loadIcon(ICON_FIND	,"/images/find.png");
 		resources.loadIcon(ICON_FILTER	,"/images/filter.png");
@@ -98,8 +97,8 @@ public class Application extends Appearance implements _Constants,_Version
 		resources.loadIcon(ICON_EXCEL	,"/images/export_excel.png");
 
 		resources.loadIcon(ICON_COMPARER	,"/images/table_error.png");
-        	resources.loadIcon(ICON_EXPLORER	,"/images/database_lightning.png");
-        	resources.loadIcon(ICON_EDITOR		,"/images/page_edit.png");
+        resources.loadIcon(ICON_EXPLORER	,"/images/database_lightning.png");
+        resources.loadIcon(ICON_EDITOR		,"/images/page_edit.png");
 		resources.loadIcon(ICON_PREFERENCES	,"/images/wrench.png");
         
 		resources.loadIcon(ICON_EXPLORER_DRIVER_OK		,"/images/cog.png", Icon_scaling);
@@ -188,7 +187,6 @@ public class Application extends Appearance implements _Constants,_Version
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static void shutdown()
 	{
 		final String message = I18n.getString("application.message.quit","Do you really want to quit SQLeo?");
@@ -460,6 +458,8 @@ public class Application extends Appearance implements _Constants,_Version
 	}
 
 	public static boolean isFullVersion() {
-		return Application.MINOR.endsWith("+");
+		// link is still there - shouldn't be rude?
+		// return Application.MINOR.endsWith("+");
+		return true;
 	}
 }

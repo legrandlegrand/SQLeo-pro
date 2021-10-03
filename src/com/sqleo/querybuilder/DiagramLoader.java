@@ -50,6 +50,7 @@ import com.sqleo.environment.Preferences;
 import com.sqleo.environment.io.ManualDBMetaData;
 import com.sqleo.environment.io.ManualTableMetaData;
 import com.sqleo.querybuilder.syntax.QueryTokens;
+import com.sqleo.querybuilder.syntax.QueryTokens.Table;
 
 
 public class DiagramLoader extends JDialog implements Runnable
@@ -101,18 +102,19 @@ public class DiagramLoader extends JDialog implements Runnable
 			loader.table = table;
 			loader.mode = mode;
 			
-			loader.show();
+			// loader.show();
+			new Thread(loader).start();
+			loader.setVisible(true);
+
 		}
 	}
 	
-	public void show()
-	{
-		new Thread(this).start();
-		super.show();
-	}
+//	public void show() {
+//		new Thread(this).start();
+//		super.show();
+//	}
 	
-	public void run()
-	{
+	public void run() {
 		try
 		{
 			switch(mode)
@@ -276,9 +278,9 @@ public class DiagramLoader extends JDialog implements Runnable
 
 	
 	
-	private void addTables(ArrayList mtdKeys,int rsSchemaIndex,int rsTableIndex) throws SQLException{
+	private void addTables(ArrayList<?> mtdKeys,int rsSchemaIndex,int rsTableIndex) throws SQLException{
 		
-		ArrayList list = new ArrayList();
+		ArrayList<Table> list = new ArrayList<Table>();
 		
 		for(Object rows : mtdKeys)
 		{
@@ -295,7 +297,7 @@ public class DiagramLoader extends JDialog implements Runnable
 			list.add(qt);
 		}
 					
-		for(ListIterator iter = list.listIterator(); iter.hasNext();)
+		for(ListIterator<Table> iter = list.listIterator(); iter.hasNext();)
 		{
 			addTable((QueryTokens.Table)iter.next());
 		}
@@ -305,7 +307,7 @@ public class DiagramLoader extends JDialog implements Runnable
 	private void addTables(ResultSet rs, int rsSchemaIndex, int rsTableIndex)
 		throws SQLException
 	{
-		ArrayList list = new ArrayList();
+		ArrayList<Table> list = new ArrayList<Table>();
 		
 		while(rs.next())
 		{
@@ -319,7 +321,7 @@ public class DiagramLoader extends JDialog implements Runnable
 		}
 		rs.close();
 					
-		for(ListIterator iter = list.listIterator(); iter.hasNext();)
+		for(ListIterator<Table> iter = list.listIterator(); iter.hasNext();)
 		{
 			addTable((QueryTokens.Table)iter.next());
 		}
@@ -426,7 +428,7 @@ public class DiagramLoader extends JDialog implements Runnable
 		if(builder.getConnection()!=null)
 		{
 			DatabaseMetaData dbmetadata = builder.getConnection().getMetaData();
-			Hashtable primary = this.getPrimaryKeys(dbmetadata,item);
+			Hashtable<String, Object> primary = this.getPrimaryKeys(dbmetadata,item);
 			
 			String name = item.getQueryToken().getName();
 			String schema = builder.getQueryModel().getSchema() == null ? item.getQueryToken().getSchema() : builder.getQueryModel().getSchema();
@@ -450,9 +452,9 @@ public class DiagramLoader extends JDialog implements Runnable
 		return item;
 	}
 	
-	private Hashtable getPrimaryKeys(DatabaseMetaData dbmetadata, DiagramEntity item)
+	private Hashtable<String, Object> getPrimaryKeys(DatabaseMetaData dbmetadata, DiagramEntity item)
 	{
-		Hashtable primary = new Hashtable();
+		Hashtable<String, Object> primary = new Hashtable<String, Object>();
 		
 		try
 		{
@@ -505,7 +507,7 @@ public class DiagramLoader extends JDialog implements Runnable
 		}
 	}
 	
-	private void join(ArrayList mtdKeys, DiagramEntity source,boolean ispk){
+	private void join(ArrayList<?> mtdKeys, DiagramEntity source,boolean ispk){
 		for(Object mtdKey : mtdKeys){
 			String[] row = (String[])mtdKey;
 			joinInternal(row[1],row[2],row[3],row[5],row[6],row[7],row[11],row[15],source,ispk,row[14]);
