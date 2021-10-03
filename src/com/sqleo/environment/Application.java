@@ -458,6 +458,7 @@ public class Application extends Appearance implements _Constants,_Version
 	}
 
 	public static boolean isFullVersion() {
+		// ody:
 		// link is still there - shouldn't be rude?
 		// return Application.MINOR.endsWith("+");
 		return true;
