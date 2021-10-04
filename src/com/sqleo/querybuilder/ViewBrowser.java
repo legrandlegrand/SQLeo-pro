@@ -44,13 +44,16 @@ import com.sqleo.querybuilder.syntax.SubQuery;
 import com.sqleo.querybuilder.syntax._ReservedWords;
 
 
-public class ViewBrowser extends BorderLayoutPanel implements TreeSelectionListener
-{
+/**
+ * The query JTree manager, a UI representation of SQL AST(?)
+ * @author ody
+ */
+@SuppressWarnings("serial")
+public class ViewBrowser extends BorderLayoutPanel implements TreeSelectionListener {
 	private QueryBuilder builder;
 	private JTree tree;
 	
-	ViewBrowser(QueryBuilder builder)
-	{
+	ViewBrowser(QueryBuilder builder) {
 		this.builder = builder;
 		
 		setComponentCenter(new JScrollPane(tree = new JTree(createTreeModel())));
@@ -62,7 +65,7 @@ public class ViewBrowser extends BorderLayoutPanel implements TreeSelectionListe
 		
 		final int oldRowHeight = tree.getRowHeight();
 		final int newRowHeight = Preferences.getScaledRowHeight(oldRowHeight);
-		if(newRowHeight != oldRowHeight){
+		if (newRowHeight != oldRowHeight) {
 			tree.setRowHeight(newRowHeight);
 		}
 		
@@ -167,27 +170,23 @@ public class ViewBrowser extends BorderLayoutPanel implements TreeSelectionListe
 		expand(item);
 	}
 	
-	private void add(int idx, QueryTokens._Base[] tokens)
-	{
-		for(int i=0; i<tokens.length; i++)
+	private void add(int idx, QueryTokens._Base[] tokens) {
+		for(int i = 0; i<tokens.length; i++)
 			add(idx,tokens[i]);
 	}
 	
-	private void add(QueryTokens.Sort[] tokens)
-	{
+	private void add(QueryTokens.Sort[] tokens) {
 		BrowserItems.DefaultTreeItem root = (BrowserItems.DefaultTreeItem)tree.getModel().getRoot();
 		BrowserItems.DefaultTreeItem item = (BrowserItems.DefaultTreeItem)root.getChildAt(1);
 		
-		for(int i=0; i<tokens.length; i++)
+		for(int i = 0; i<tokens.length; i++)
 			item.addChild(tokens[i]);
 	}
 	
-	private void remove(int idx, QueryTokens.Join token)
-	{
+	private void remove(int idx, QueryTokens.Join token) {
 		BrowserItems.DefaultTreeItem item = (BrowserItems.DefaultTreeItem)this.getQueryItem().getChildAt(idx);
 		
-		for(int i=0; i<2; i++)
-		{
+		for(int i = 0; i < 2; i++) {
 			QueryTokens.Table qtoken = i==0 ? token.getPrimary().getTable() : token.getForeign().getTable();
 			BrowserItems.DefaultTreeItem child = item.findChild(qtoken);
 			if(child!=null)
