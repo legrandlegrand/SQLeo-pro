@@ -1,6 +1,8 @@
 # SQLeo-Pro
 A temp try to extend [SQLeo Visual Query Builder](https://sourceforge.net/projects/sqleo/).
 
+<img src='https://github.com/odys-z/odys-z.github.io/blob/master/sphinx/semantier/img/00-start-fancy.png?raw=true'/>
+
 -----------------------------------------------------------------------------
 # SQLeo README.txt
 
