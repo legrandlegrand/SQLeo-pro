@@ -2,7 +2,7 @@
 A temp try to extend [SQLeo Visual Query Builder](https://sourceforge.net/projects/sqleo/).
 
 -----------------------------------------------------------------------------
-# SQLeo READM.txt
+# SQLeo README.txt
 
 To Build with ant on windows :
 1. Checkout SQLeo source
