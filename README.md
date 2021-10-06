@@ -1,4 +1,4 @@
-# SQLeo-Pro
+# SQLeo-pro
 A temp try to extend [SQLeo Visual Query Builder](https://sourceforge.net/projects/sqleo/).
 
 <img src='https://github.com/odys-z/odys-z.github.io/blob/master/sphinx/semantier/img/00-start-fancy.png?raw=true'/>
@@ -16,7 +16,7 @@ To Build with ant on windows :
 
 To Build with eclipse :
 1. Checkout SQLeo source and add an empty lib folder on project root path.
-2. In Eclipe goto File->New->Other->Java Project from existing ant build file 
+2. In Eclipe goto File->New->Other->Java Project from existing ant build file
    and select the ant build file.
 3. To run the application: Run com.sqleo.environment.Application.java
 4. To export as JAR : Select project -> export as jar (deselect svn files)
@@ -28,11 +28,11 @@ To run SQLeo Visual Query Builder, launch:
 
 or rename sqleo-start-xxx.yyy to:
 
-  sqleo-start-xxx.bat 
+  sqleo-start-xxx.bat
   sqleo-start-xxx.sh
   sqleo-start-xxx.command
 
-With the expected LookAndFeel 
+With the expected LookAndFeel
 (Warning Metal is set by default because it is the only one that has been fully tested)
 
 
@@ -46,14 +46,14 @@ SQLeoVQB.2019.01.rc1.zip: 2019-01-23
   For changes included see tickets at  
      http://sourceforge.net/p/sqleo/tickets/milestone/2017.09/
 
-	#407 support for java 9,10 and 11 
+	#407 support for java 9,10 and 11
 
 
 SQLeoVQB.2017.09.rc1.zip: 2017-09-17
 
   For changes included see tickets at  
      http://sourceforge.net/p/sqleo/tickets/milestone/2017.09/
-	
+
 	#403 	Update pivottable.js to version 2.14.0
 	#402 	Update csvjdbc driver to 1.0.32
 
@@ -62,13 +62,13 @@ SQLeoVQB.2017.03.rc1.zip: 2017-03-21
 
   For changes included see tickets at  
      http://sourceforge.net/p/sqleo/tickets/milestone/2017.03/
-	
+
 	#401 	SQLeoPivotDiff
 	#389 	Designer: filter with OR condition is changed in AND
 	#388 	Designer: enable "remove" on right click on table
 	#377 	Designer: reverse query with ON condition with values is wrong
 	#325 	create Aliases for SQL queries
-			see sql/aliases.sql 
+			see sql/aliases.sql
 
 
 SQLeoVQB.2016.12.rc1.zip: 2016-12-30
@@ -213,7 +213,7 @@ SQLeoVQB.2015.12.rc1.zip: 2016-01-02
 	335 New portuguese brasilian translation (by Eder Jorge)
 	334 Content Window: java.lang.ArrayIndexOutOfBoundsException with Update or delete
 	329 Query builder /​ Command editor: avoid PostgreSQL ERROR: current transaction is aborted
-		All Statements use Auto SavePoints 
+		All Statements use Auto SavePoints
 		rem: Also works with MonetDB
 
 	328 Command editor: support for PostgreSQL Anonymous block DO $$
@@ -247,8 +247,8 @@ SQLeoVQB.2015.09.rc1.zip: 2015-09-17
 	309 data comparer: check that connexions are set before to start
 	282 Query Builder: add Warning message when trying to run many SQL
 	313 Grid content /​ output: resultset is not closed at end of query
-	278 copy and open in editor: choose file extension in preferences 
-	183 copy and open in editor: line feed are lost 
+	278 copy and open in editor: choose file extension in preferences
+	183 copy and open in editor: line feed are lost
 
 
 SQLeoVQB.2015.08.rc1.zip: 2015-08-25
@@ -303,7 +303,7 @@ SQLeoVQB.2015.05.rc1.zip: 2015-05-27
 		Note that dialog box need to be manually resized
 
 	268 Command Editor: multiple inserts returns only one status line
-	172 query Builder: add "sync columns with select" for group by 
+	172 query Builder: add "sync columns with select" for group by
 
 
 SQLeoVQB.2015.04.rc1.zip: 2015-04-17
@@ -393,7 +393,7 @@ SQLeoVQB.2014.11.rc1a.zip: 2014-11-22
 
 	227 reverted FONT_SIZE_PERCENTAGE default from 110 to 100
 	225 reverted ICON_SIZE_PERCENTAGE default from 160 to 100
-	
+
 
 SQLeoVQB.2014.11.rc1.zip: 2014-10-25
 
@@ -407,7 +407,7 @@ SQLeoVQB.2014.11.rc1.zip: 2014-10-25
 	226 support for Oracle db link syntax
 	225 Bigger icons for high resolution screens (and others)
 	174 query builder: add export to csv in syntax window
-	 91 Query Builder: add support for UNION ALL 
+	 91 Query Builder: add support for UNION ALL
 
 
 SQLeoVQB.2014.10.rc1.zip: 2014-10-02
@@ -438,7 +438,7 @@ SQLeoVQB.2014.09.rc1.zip: 2014-09-09
 
 SQLeoVQB.2014.08.rc1.zip: 2014-08-23
 
-  Thanks to 
+  Thanks to
 	- Philipp Blaszczyk, Marcin Chojnacki, Miguel Angel Gil Rios for translations
 	- Anudeep Gade for his contribution to the code of this release
 
@@ -464,7 +464,7 @@ SQLeoVQB.2014.07.rc1.zip: 2014-07-15
 	208 Designer: improve arrange spring
 	206 change donation link from paypal to:
 		http://sqleo.sourceforge.net/support.html
-			
+
 
 SQLeoVQB.2014.06.rc1.zip: 2014-05-27
 
@@ -507,7 +507,7 @@ SQLeoVQB.2014.04.rc1.zip: 2014-03-31
 	150,160	Reverse query: display missing columns for joins
 		  --> graph is dislayed in red when table or column not found
 		  --> permits to reverse any SQL query without being connected
-			
+
 	189 	Command editor result - Add option for find dialog to search
 	144 	Reverse query: column alias without AS not recognized for functions
 
@@ -543,7 +543,7 @@ SQLeoVQB.2014.02.rc1.zip: 2014-02-04
 	168 	remove .bat extensions in zip to be able to send it to gmail users
 	165 	export csv: propose option for "no text" if null
 	162 	export csv: enclose text by ""
-	107 	Content window: column size should be preserved during 
+	107 	Content window: column size should be preserved during
 			execute or data refresh (F5)
 	28 	trim space during export doen't trim
 
@@ -599,7 +599,7 @@ SQLeoVQB.2013.10.rc2.zip: 2013-10-24
 	90 	Reverse query: add support for EXTRACT(year from date)
 
   New ticket added:
-	140 unmappable character for encoding UTF8 
+	140 unmappable character for encoding UTF8
 
 
 SQLeoVQB.2013.10.rc1.zip: 2013-10-18
@@ -622,9 +622,9 @@ SQLeoVQB.2013.09.rc01.zip: 2013-09-16
   Thanks to Bao Nguyen for his contribution to this release
   For changes included see tickets at  
      http://sourceforge.net/p/sqleo/tickets/milestone/2013.09/
-	134 	save join to file: schema is forgotten with option "no schema in query" 
+	134 	save join to file: schema is forgotten with option "no schema in query"
 	123 	Reverse query: select (subquery) x from ... looses alias
-	72 	Query Builder: reverse "case when ..." is wrong 
+	72 	Query Builder: reverse "case when ..." is wrong
 
 
 SQLeoVQB.2013.08.rc01.zip: 2013-08-11
@@ -636,10 +636,10 @@ SQLeoVQB.2013.08.rc01.zip: 2013-08-11
 	129 	Command editor connections dropdown has duplicates when socket read timeout occurs.
 	128 	Add a preference to disable asking "ask before exit" everytime.
 	110 	Auto-complete(intelli-sense) SQL in editor
-		  works with connected user schema objects, 
+		  works with connected user schema objects,
 		  or db objects if db doesn't support schema (MySQL, Firebird)
 		  supported syntax is (lowercase) in command editor and query builder (syntax tab)
-			select table.col from table where table.col ... 
+			select table.col from table where table.col ...
 
 
 SQLeoVQB.2013.07.rc01.zip: 2013-07-22
@@ -647,7 +647,7 @@ SQLeoVQB.2013.07.rc01.zip: 2013-07-22
   For changes included see tickets at  
      http://sourceforge.net/p/sqleo/tickets/milestone/2013.07/
 
-	127 Query Builder: don't take table alias to csv file when saving join 
+	127 Query Builder: don't take table alias to csv file when saving join
 	126 Java Web Start compatibility
 
   Thanks to Bao Nguyen for his contribution:
@@ -665,15 +665,15 @@ SQLeoVQB.2013.06.rc01.zip: 2013-06-05
 	118 Designer: arrange spring has wrong effect
 
 	Note: Saving to XLQ format will be desupported soon, and be replaced by:
-	76 Query builder: keep table position, sort and pack information as a comment in SQL 
+	76 Query builder: keep table position, sort and pack information as a comment in SQL
 
 SQLeoVQB.2013.05.rc01.zip: 2013-05-25
 
   For changes included see tickets at  
      http://sourceforge.net/p/sqleo/tickets/milestone/2013.05/
-	43 Improve Entity-relation Graph display 
+	43 Improve Entity-relation Graph display
 		In graph designer "arrange entities" has been renamed to "arrange grid".
-		"arrange spring" added to permit entities arrangement based on a 
+		"arrange spring" added to permit entities arrangement based on a
 		spring/magnetic layout model.
 
 
@@ -682,8 +682,8 @@ SQLeoVQB.2013.04.rc01.zip: 2013-04-23
   For changes included see tickets at  
      http://sourceforge.net/p/sqleo/tickets/milestone/2013.04/
 
-	26 Reverse SQL syntax problems, support added for: 
-		JOIN , LEFT JOIN, RIGHT JOIN, FULL JOIN, CROSS JOIN 
+	26 Reverse SQL syntax problems, support added for:
+		JOIN , LEFT JOIN, RIGHT JOIN, FULL JOIN, CROSS JOIN
 	75 Query Builder: Highlight columns with where conditions using a flag or color
 	106 Query Builder: reuse same Content window on successives executions
 	108 Reverse query: graph for nested derived queries is wrong
@@ -695,32 +695,32 @@ SQLeoVQB.2013.02.rc03.zip: 2013-03-23
   For changes included see tickets at  
      http://sourceforge.net/p/sqleo/tickets/milestone/2013.02/
 
-	55 Query Builder: Table name is not displayed in graph when table alias is used 
+	55 Query Builder: Table name is not displayed in graph when table alias is used
 	67 change property file .sqleo to xml clear text
 		Two files are now used for configuration:
 			.sqleo.xml
 			.sqleo.metaview
 		Don't forget to save them on a regular basis
- 
-	71 Content window: add filter value show null 
+
+	71 Content window: add filter value show null
 	73 Query Builder: reverse SQL, add Oracle join type (+) support
 		Warning message when transforming a(+) join to INNER join
- 
-	78 Query builder: do not auto alias fields in (derived table) subqueries 
+
+	78 Query builder: do not auto alias fields in (derived table) subqueries
 	79 Content / preview window: add row count on content window
 	80 Query builder: reverse SQL, add derived tables subqueries support
 		support for CTE (Common Table expression) added to ANSI and SQL92 style
 		Not finished yet (joins with Derived tables are not drawned in graph)
 
-	83 Query builder: reverse SQL, remove -- comments 
-	84 Query builder still broken after reconnect 
+	83 Query builder: reverse SQL, remove -- comments
+	84 Query builder still broken after reconnect
 	85 Query Builder: check for PK when saving join to file
 	88 Propose Definition from query designer rigth click
 	92 Query Builder: reverse SQL syntax for table ALIAS in joins is case sensitiv
-	93 Query Builder: reverse SQL for WHERE (NOT) EXISTS to be added 
+	93 Query Builder: reverse SQL for WHERE (NOT) EXISTS to be added
 	96 Content window: refresh (F5) when all rows are fetched returns blank screen
 	100 Content Window: "sort by" doesn't override initial order by from syntax
-	102 Query builder: reverse SQL, support OVER( PARTITION ... ORDER BY ...) 
+	102 Query builder: reverse SQL, support OVER( PARTITION ... ORDER BY ...)
 	103 Improve SQLeo to check for new version available on server
 		and Add donate shortcut
 
@@ -744,8 +744,8 @@ SQLeoVQB.2012.07Beta04.zip: 2012-10-19
 	32 	Command Editor: ask to save on exit
 	38 	Content/Preview: remove left scrolling bar
 	41 	Propose Content from query designer rigth click
-	54  	Query Builder: reverse "sum(c) col_alias" is wrong 
-	56 	"Undo CTRL-Z/ Redo CTRL-Y" text on command editor/ syntax editor 
+	54  	Query Builder: reverse "sum(c) col_alias" is wrong
+	56 	"Undo CTRL-Z/ Redo CTRL-Y" text on command editor/ syntax editor
 	63 	Preferences: defaults modification
 	64 	Content: exporting modified field from grid is wrong
 	66 	use csvjdbc version 1.0-11 (bundled with SQLeo)
@@ -768,13 +768,13 @@ SQLeoVQB.2012.03Beta04.zip: 2012-07-18
    - Help in pdf,docx,html format:
      http://svn.code.sf.net/p/sqleo/code/trunk/doc/howtouse/
 
-   - javadoc from here: 
+   - javadoc from here:
      http://svn.code.sf.net/p/sqleo/code/trunk/doc/sqleo-javadoc.zip
 
-   - html version of the help document is availabile online from SQLeo website 
+   - html version of the help document is availabile online from SQLeo website
      http://sqleo.sourceforge.net/guide.html
 
-   Adapted SQLeo app menubar > help > howtouse to 
+   Adapted SQLeo app menubar > help > howtouse to
      http://sqleo.sourceforge.net/ site.
 
   For changes included see tickets at  
@@ -816,19 +816,19 @@ SQLeoVQB.2012.01Beta02.zip: 2012-03-06
 
 
   Exemple of using Join definition in a csv file:
-	
-    - customize FKdefinition.csv regarding your database 
+
+    - customize FKdefinition.csv regarding your database
       or use create_table.sql exemple.
 
     - Define your Join definition file (per datatabase) if needed.
       (now available for non-windows users)
 
-    - modify "table owner" and "ref table owner" columns 
+    - modify "table owner" and "ref table owner" columns
       with the schema name used (let thoses columns empty if none).
 
-    - "table alias" has to be used when many FK are 
+    - "table alias" has to be used when many FK are
       referencing the same table PK
-               
+
     - join type to be defined in INNER(defaul), LEFT, RIGHT, FULL
 
     - when connected to SQLeo
@@ -839,16 +839,16 @@ SQLeoVQB.2012.01Beta02.zip: 2012-03-06
 
     - Open a query (menu --> file --> new query)
 	add table FACT
-	add other tables using the table click 
+	add other tables using the table click
 		"open all foreign tables" or
 		"open all primary tables" or
 		"references..."
 	select columns, where conditions, group by, order by ...
-        execute 
+        execute
 	query can be saved to .xlq, .sql or image
 	data results can be sorted, filtered, exported to .txt or .csv
 	see the specific feature "jump" that permits to open in a click
 	a new window with "referenced data" (using joins and filters)
 
-    - connection to the corresponding database needs to be restarted to 
+    - connection to the corresponding database needs to be restarted to
       take FKdefinition.csv changes into account.
