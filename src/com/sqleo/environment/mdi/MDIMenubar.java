@@ -27,10 +27,7 @@ package com.sqleo.environment.mdi;
 import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.Vector;
 
 import javax.swing.Action;
@@ -42,7 +39,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.event.InternalFrameEvent;
@@ -187,46 +183,61 @@ public class MDIMenubar extends JMenuBar implements InternalFrameListener
 		add(content);
 	}
 	
-	public void addVersionLink(){
+	public void addVersionLink() {
+		/* Runable's sleeping test shows that the runnable blocked UI event handling (not asynchronously?),
+		 * making UX of slow Internet accessing unacceptable.
+		 * see
+		 * https://stackoverflow.com/a/4227812/7362888
 		SwingUtilities.invokeLater( new Runnable() {
 			@Override
 			public void run() {
 				String version = getLatestVersionName();
-				if(version!=null){
+				if(version != null){
 					addLink(I18n.getString("application.menu.newversion","New version available : ")
 							+ version
 							,Application.SF_WEB);
 				}
 			}
 		});
+		 */
 	}
 
-	private String getLatestVersionName(){
+	@SuppressWarnings("unused")
+	private String getLatestVersionName() {
+		/* ody: disable SQLeo-pro's google analytics
+		 * http://www.google-analytics.com/collect?v=1&tid=UA-38580300-2&cid=555&t=pageview&dt=Version&dp=%2Fversion_2021.10.pro_svn 
 		try {
 			// check if sf url can be reached first 
-             URL url = new URL(Application.VERSION_TRACK);
-             HttpURLConnection urlConnect = (HttpURLConnection)url.openConnection();
-             urlConnect.setConnectTimeout(5000);//max time out 5 seconds
-	     urlConnect.setInstanceFollowRedirects(true);
-	     urlConnect.setRequestMethod("GET");
-	     urlConnect.setRequestProperty("User-Agent","Java/"+System.getProperty("java.version")+" ("+System.getProperty("os.arch")+")");
-//	     System.out.println("Java/"+System.getProperty("java.version")+" ("+System.getProperty("os.arch")+")");
-             urlConnect.connect();
-	     System.out.println("HTTP status: "+ urlConnect.getResponseCode());
-         } catch (UnknownHostException e) {
-             e.printStackTrace();
-             return null;
-         }
-         catch (IOException e) {
-             e.printStackTrace();
-             return null;
-         }
+			URL url = new URL(Application.VERSION_TRACK);
+			HttpURLConnection urlConnect = (HttpURLConnection)url.openConnection();
+			urlConnect.setConnectTimeout(5000);//max time out 5 seconds
+			urlConnect.setInstanceFollowRedirects(true);
+			urlConnect.setRequestMethod("GET");
+			urlConnect.setRequestProperty("User-Agent","Java/"+System.getProperty("java.version")+" ("+System.getProperty("os.arch")+")");
+			//	     System.out.println("Java/"+System.getProperty("java.version")+" ("+System.getProperty("os.arch")+")");
+			urlConnect.connect();
+			System.out.println("HTTP status: "+ urlConnect.getResponseCode());
+        } catch (UnknownHostException e) {
+			e.printStackTrace();
+			return null;
+        }
+        catch (IOException e) {
+			e.printStackTrace();
+			return null;
+        }
+        */
+
 		// if sf connection made then we will be here to process build.xml file 
         String version = null; 
 		try {
 			final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			final DocumentBuilder builder = factory.newDocumentBuilder();
 			final Document document = builder.parse(Application.SVN_BUILD_XML_FILE);
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			if(document!=null){
 				NodeList props = document.getElementsByTagName("property");
 				boolean foundAttribute = false;
@@ -268,11 +279,12 @@ public class MDIMenubar extends JMenuBar implements InternalFrameListener
 		}else if(Integer.parseInt(vMajor) == Integer.parseInt(Application.MAJOR) ){
 			String[] x = Application.MINOR.split("\\.");
 			String lMinor = x[0];
-			if(Integer.parseInt(vMinor)>Integer.parseInt(lMinor)){
+			if(Integer.parseInt(vMinor) > Integer.parseInt(lMinor)) {
 				return version;
-			}else if(Integer.parseInt(vMinor)==Integer.parseInt(lMinor)){
+			}
+			else if(Integer.parseInt(vMinor) == Integer.parseInt(lMinor)) {
 				String lRelease = x[1];
-				if(vRelease.compareTo(lRelease)>0){
+				if(vRelease.compareTo(lRelease) > 0) {
 					return version;
 				}
 			}
@@ -476,12 +488,10 @@ public class MDIMenubar extends JMenuBar implements InternalFrameListener
 	public class History
 	{
 	    private int current = -1;
-	    private boolean enabled = false;
-	    private Vector sequence = new Vector();
+	    private Vector<MDIClient> sequence = new Vector<MDIClient>();
 	    
 	    void add(MDIClient client)
 	    {
-	    	enabled = false;
 	    	// simpler add new ones at the end
 			sequence.add(client);
 	    	final int total = sequence.size();
@@ -490,7 +500,6 @@ public class MDIMenubar extends JMenuBar implements InternalFrameListener
 	    
 	    void previous()
 	    {
-	    	enabled = false;
 	    	if(current > 0) --current;
 			MDIClient back = (MDIClient)sequence.elementAt(current);
 			Action action = Application.window.menubar.getActionForShow(back.getName());
@@ -499,7 +508,6 @@ public class MDIMenubar extends JMenuBar implements InternalFrameListener
 	    
 	    void enableSequence()
 	    {
-	    	enabled = true;
 	    }
 	    
 	    void onSelectionChanged(MDIClient client)
@@ -517,7 +525,6 @@ public class MDIMenubar extends JMenuBar implements InternalFrameListener
 	    
 	    void next()
 	    {
-	    	enabled = false;	    	
 	    	MDIClient forward = (MDIClient)sequence.elementAt(++current);
 			Action action = Application.window.menubar.getActionForShow(forward.getName());
 			if(action!=null) action.actionPerformed(null);
@@ -525,7 +532,6 @@ public class MDIMenubar extends JMenuBar implements InternalFrameListener
 	    
 	    void remove(MDIClient client)
 	    {
-	    	enabled = false;
 	    	for(int found=-1; (found=sequence.indexOf(client))!=-1;)
 	    	{
 	    		sequence.removeElementAt(found);
